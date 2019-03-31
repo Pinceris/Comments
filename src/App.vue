@@ -72,6 +72,9 @@ export default {
         text: reply
       });
       localStorage.setItem('comments', JSON.stringify(this.comments));
+    },
+    deleteComment: function(id) {
+      this.comments.splice(id,1);
     }
   }
 

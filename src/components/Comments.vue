@@ -1,6 +1,8 @@
 <template>
     <div>
     <div class="comments">
+
+        <button class="btn btn-outline-danger" v-show=liko @click="showMore"> Show More ({{comments.length-start}} comments hidden) </button>
         <div :class="comments_wrapper_classes">
             <!--<single-comment
                 v-for="comment in comments"
@@ -9,18 +11,14 @@
             ></single-comment>-->
 
 
-            <button class="man" @click="showMore"></button>
+
             <single-comment v-if="showLess"
-                                v-for="comment in comments.slice(0, start)"
+                                v-for="comment in comments.slice(0, this.start)"
                                 :comment="comment"
                                 :key="comment.id"
+
             ></single-comment>
 
-            <single-comment v-else-if="!showLess"
-                        v-for="comment in comments.slice(0, count)"
-                        :comment="comment"
-                        :key="comment.id"
-            ></single-comment>
             </div>
 
 
@@ -58,6 +56,7 @@ import singleComment from './SingleComment'
                 showLess: true,
                 count: 20,
                 start: 4,
+                liko: false
             }
         },
         methods: {
@@ -65,12 +64,22 @@ import singleComment from './SingleComment'
                 if(this.reply != '') {
                     this.$emit('submit-comment', this.reply);
                     this.reply = '';
+                    if(this.start>=this.comments.length) {
+                        this.liko = false;
+                    }
+                    else if(this.start<this.comments.length){
+                        this.liko = true;
+                    }
                 }
             },
             showMore() {
-                count=start+count;
-                start=count;
-                showLess=false;
+                this.start = this.start + 4;
+                if(this.start>=this.comments.length) {
+                    this.liko = false;
+                }
+                else if(this.start<=this.comments.length){
+                    this.liko = true;
+                }
             }
         },
         props: ['comments', 'current_user', 'comments_wrapper_classes']
@@ -192,10 +201,5 @@ hr {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-    .man {
-        width: 50px;
-        size: 50px;
-        height: 50px;
-        color: crimson;
-    }
+
 </style>
