@@ -23,6 +23,7 @@
           :current_user="current_user"
           @submit-comment="submitComment"
         ></comments>
+
     </div>
 
   </div>
@@ -53,6 +54,7 @@ export default {
           user: 'example',
           avatar: 'http://via.placeholder.com/100x100/a74848',
           text: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor ',
+          date: '',
         },
 
 
@@ -65,17 +67,28 @@ export default {
   },
   methods: {
     submitComment: function(reply) {
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var x = h >= 12 ? 'pm' : 'am';
+        h = h % 12;
+        h = h ? h : 12;
+        m = m < 10 ? '0'+m: m;
+        var mytime= h + ':' + m + ' ' + x;
+
       this.comments.push({
         id: this.comments.length + 1,
         user: this.current_user.user,
         avatar: this.current_user.avatar,
-        text: reply
+        text: reply,
+        date: mytime
       });
       localStorage.setItem('comments', JSON.stringify(this.comments));
     },
-    deleteComment: function(id) {
-      this.comments.splice(id,1);
-    }
+      timeFormat: function(date) {
+
+          return mytime;
+      }
   }
 
 

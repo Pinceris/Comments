@@ -2,7 +2,7 @@
     <div>
     <div class="comments">
 
-        <button class="btn btn-outline-danger" v-show=liko @click="showMore"> Show More ({{comments.length-start}} comments hidden) </button>
+        <button class="btn btn-outline-danger" v-show=commLeft @click="showMore"> Show More ({{comments.length-start}} comments hidden) </button>
         <div :class="comments_wrapper_classes">
             <!--<single-comment
                 v-for="comment in comments"
@@ -56,7 +56,7 @@ import singleComment from './SingleComment'
                 showLess: true,
                 count: 20,
                 start: 4,
-                liko: false
+                commLeft: false
             }
         },
         methods: {
@@ -65,20 +65,20 @@ import singleComment from './SingleComment'
                     this.$emit('submit-comment', this.reply);
                     this.reply = '';
                     if(this.start>=this.comments.length) {
-                        this.liko = false;
+                        this.commLeft = false;
                     }
                     else if(this.start<this.comments.length){
-                        this.liko = true;
+                        this.commLeft = true;
                     }
                 }
             },
             showMore() {
                 this.start = this.start + 4;
                 if(this.start>=this.comments.length) {
-                    this.liko = false;
+                    this.commLeft = false;
                 }
                 else if(this.start<=this.comments.length){
-                    this.liko = true;
+                    this.commLeft = true;
                 }
             }
         },

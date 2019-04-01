@@ -6,7 +6,8 @@
             <img :src="comment.avatar"  alt="">
         </div>
         <div class="text">
-            <a class="username" href="#">@{{ comment.user }}</a> <span>{{ comment.text }}</span>
+            <a class="username" href="#">@{{ comment.user }} </a> <span>{{ comment.text }}</span>
+            {{comment.date}}
         </div>
         <div class="del">
             <button type="button" class="btn-outline-danger btn-sm"v-if="hover" v-on:click="my">delete</button>
